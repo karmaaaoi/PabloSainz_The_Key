@@ -3,9 +3,12 @@ using UnityEngine;
 public class Player_Controler : MonoBehaviour
 {
     public float velocidad = 10f;
+    public float gravity = -9.81f;
+    public float verticalSpeed;
     private CharacterController CharacterController;
     float horizontalMove;
     float verticalMove;
+    public float coinCollete = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,7 +21,25 @@ public class Player_Controler : MonoBehaviour
     {
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
-        Vector3 direction = new Vector3(horizontalMove, 0, verticalMove);
+        if (CharacterController.isGrounded == true)
+        {
+            verticalSpeed = 0;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                verticalSpeed = 2.5f;
+            }
+        }
+        verticalSpeed += gravity * Time.deltaTime;
+        Vector3 direction = new Vector3(horizontalMove, verticalSpeed, verticalMove);
         CharacterController.Move(direction * velocidad * Time.deltaTime);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            coinCollete += 1;
+            Debug.Log("AAAAAAAAAA");
+        }
+        Debug.Log("Ball Hit");
     }
 }
