@@ -5,6 +5,7 @@ public class Player_Controler : MonoBehaviour
     public float velocidad = 10f;
     public float gravity = -9.81f;
     public float verticalSpeed;
+    public Game_Manager gameManager;
     private CharacterController CharacterController;
     float horizontalMove;
     float verticalMove;
@@ -33,13 +34,15 @@ public class Player_Controler : MonoBehaviour
         Vector3 direction = new Vector3(horizontalMove, verticalSpeed, verticalMove);
         CharacterController.Move(direction * velocidad * Time.deltaTime);
     }
-    private void OnCollisionEnter(Collision collision)
+
+    public void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (collision.gameObject.CompareTag("Coin"))
+        if (hit.gameObject.CompareTag("Coin"))
         {
             coinCollete += 1;
-            Debug.Log("AAAAAAAAAA");
+            Debug.Log("AAAAAAAAAA, tienes "+coinCollete+" monedas");
+            Destroy(hit.gameObject);
         }
-        Debug.Log("Ball Hit");
+        Debug.Log("Collided with: " + hit.gameObject.name);
     }
 }
