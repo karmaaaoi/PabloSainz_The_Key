@@ -5,7 +5,6 @@ public class Player_Controler : MonoBehaviour
     public float velocidad = 10f;
     public float gravity = -9.81f;
     public float verticalSpeed;
-    public Game_Manager gameManager;
     private CharacterController CharacterController;
     float horizontalMove;
     float verticalMove;
