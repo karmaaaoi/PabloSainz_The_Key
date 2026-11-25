@@ -38,10 +38,21 @@ public class Player_Controler : MonoBehaviour
     {
         if (hit.gameObject.CompareTag("Coin"))
         {
-            coinCollete += 1;
-            Debug.Log("AAAAAAAAAA, tienes "+coinCollete+" monedas");
-            Destroy(hit.gameObject);
+
+            collectable_controller collectable = hit.gameObject.GetComponent<collectable_controller>();
+            if (collectable.collectable == false)
+            {
+                collectable.collectable = true;
+                //sumar 1 a la moneda
+                coinCollete += 1;
+                //mostrar en consola texto de cuantas monedas tienes
+                Debug.Log("moneda" + coinCollete);
+                //destruir moneda
+                Destroy(hit.gameObject);
+            }
         }
+
         Debug.Log("Collided with: " + hit.gameObject.name);
     }
 }
+
